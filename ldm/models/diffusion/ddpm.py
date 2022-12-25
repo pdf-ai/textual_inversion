@@ -563,6 +563,7 @@ class LatentDiffusion(DDPM):
         model = instantiate_from_config(config, embedder=embedder)
 
         if config.params.get("embedding_manager_ckpt", None): # do not load if missing OR empty string
+            print('Loading embedding')
             model.load(config.params.embedding_manager_ckpt)
         
         return model
@@ -1488,7 +1489,6 @@ class LatentDiffusion(DDPM):
 
         if not self.unfreeze_model: # If we are not tuning the model itself, zero-out the checkpoint content to preserve memory.
             checkpoint.clear()
-        
         if os.path.isdir(self.trainer.checkpoint_callback.dirpath):
             self.embedding_manager.save(os.path.join(self.trainer.checkpoint_callback.dirpath, "embeddings.pt"))
 

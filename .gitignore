@@ -1,0 +1,12 @@
+source/
+framework_logs/
+datasets/
+logs/
+outputs/
+loss_visualization/
+src/
+img/
+*.ckpt
+*.ipynb_checkpoints*
+__pycache__/
+*__pycache__*

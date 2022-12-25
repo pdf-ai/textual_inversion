@@ -6,6 +6,13 @@ from PIL import Image
 from tqdm import tqdm, trange
 from einops import rearrange
 from torchvision.utils import make_grid
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+print(sys.path)
+from os import path
+d = path.dirname(__file__)  
+parent_path = os.path.dirname(d)
+sys.path.append(parent_path)
 
 from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler

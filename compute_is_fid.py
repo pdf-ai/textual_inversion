@@ -76,3 +76,5 @@ if __name__ == "__main__":
     print(evaluation('outputs/txt2img-samples/no_pseudo_word_cat', '../datasets/lsun_dataset/cat/100/statistics.npz') )
     print(evaluation('../datasets/demo_generated', '../datasets/demo/statistics.npz') )
     print(evaluation('../datasets/demo_source', '../datasets/demo/statistics.npz') )
+    print(evaluation('../datasets/demo_generated', '../datasets/demo_all/statistics.npz') )
+    print(evaluation('../datasets/demo_source', '../datasets/demo_all/statistics.npz') )

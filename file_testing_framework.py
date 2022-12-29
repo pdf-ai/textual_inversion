@@ -63,6 +63,11 @@ def get_parser(**parser_kwargs):
         default=4,
     )
     parser.add_argument(
+        "--gpu",
+        type=int,
+        default=0,
+    )
+    parser.add_argument(
         "-st",
         "--steps",
         type=int,
@@ -152,7 +157,7 @@ if __name__ == '__main__':
     attack_parameters = str(args.epsilon) + '_' + str(args.steps) + '_' + str(args.alpha) 
     output_path = 'attacked_' + args.output_path + '/' + attack_parameters
     target_removing_path = 'source/' + output_path
-    source_command = 'python attack_ldm_fix_path.py -t --actual_resume models/ldm/text2img-large/model.ckpt --gpus 0, '
+    source_command = 'python attack_ldm_fix_path.py -t --actual_resume models/ldm/text2img-large/model.ckpt  --gpus '+str(args.gpu) + ', '
     dir_info = '--data_root ' + args.input_path + ' -out ' + args.output_path + ' -bs ' + str(args.batch_size)
     if type == 'style':
         config_name = '--base configs/latent-diffusion/txt2img-1p4B-finetune_style_with_grad.yaml '
@@ -215,7 +220,9 @@ if __name__ == '__main__':
             del_file(output_log_target_path_cln, 'all')
         os.mkdir(output_log_target_path_cln)
     class_num=0
-    for count_dir in os.listdir(target_removing_path):
+    dir_list = os.listdir(target_removing_path)
+    dir_list.sort()
+    for count_dir in dir_list:
         class_num += 1
         if args.resume > class_num:
             print('skipping ',count_dir)
@@ -232,7 +239,7 @@ if __name__ == '__main__':
         if not args.no_del:
             os.mkdir(output_class)
             os.mkdir(log_target_class)
-        generating_command = 'python generating_images.py -t --gpus 0, --actual_resume models/ldm/text2img-large/model.ckpt ' + training_config_name + '--data_root ' + input_data_class + ' --logdir ' + str(log_target_class)
+        generating_command = 'python generating_images.py -t --gpus '+str(args.gpu)+', ' +  '--actual_resume models/ldm/text2img-large/model.ckpt ' + training_config_name + '--data_root ' + input_data_class + ' --logdir ' + str(log_target_class)
         print(generating_command)
         os.system(generating_command)
         print('Phase4 Generating Adv Embeddings')
@@ -252,7 +259,7 @@ if __name__ == '__main__':
         print('Phase6 Training Clean Embeddings')
         os.mkdir(output_class_cln)
         os.mkdir(log_target_class_cln)
-        generating_cln_command = 'python generating_images.py -t --gpus 0, --actual_resume models/ldm/text2img-large/model.ckpt ' + training_config_name + '--data_root ' + clean_input_path + ' --logdir ' + str(log_target_class_cln)
+        generating_cln_command = 'python generating_images.py -t --gpus '+str(args.gpu)+', ' +  ' --actual_resume models/ldm/text2img-large/model.ckpt ' + training_config_name + '--data_root ' + clean_input_path + ' --logdir ' + str(log_target_class_cln)
         print(generating_cln_command)
         os.system(generating_cln_command)
         print('Phase7 Generating Clean Embeddings')

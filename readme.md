@@ -19,7 +19,7 @@ The option '-no_del' and '-no_attack' is crucial to avoid mis-deleting existing 
 # Commands
 ## Sheep dataset
 
-Preparations for running the framework testing (You should create the dir ./datasets/lsun_dataset/sheep brfore running the commands):
+Preparations for running the framework testing (You should create the dir ./datasets/sheep brfore running the commands):
 `python clean_package.py  -out sheep -input ../datasets/lsun_dataset/sheep`
 
 
@@ -35,7 +35,7 @@ Example textual_inversion_img2img (w attack):
 `python scripts/img2img.py --init-img  source/object/summary_img/source_1.png --ddim_eta 0.0 --n_samples 2 --n_iter 2 --scale 10.0 --ddim_steps 50  --embedding_path logs/summary_img2022-12-03T18-59-14_Source_Object1/checkpoints/embeddings_gs-4999.pt --ckpt models/ldm/text2img-large/model.ckpt --prompt "The * on the beach"`
 
 ## Wikiart
-Preparations for running the framework testing(You should create the dir ./datasets/lsun_dataset/danbooru2017 brfore running the commands):
+Preparations for running the framework testing(You should create the dir ./datasets/danbooru2017 brfore running the commands):
 `python clean_package.py  -out danbooru2017 -input ../datasets/danbooru2017`
 
 

@@ -159,7 +159,7 @@ if __name__ == '__main__':
     target_removing_path = 'source/' + output_path
     source_command = 'python attack_ldm_fix_path.py -t --actual_resume models/ldm/text2img-large/model.ckpt  --gpus '+str(args.gpu) + ', '
     dir_info = '--data_root ' + args.input_path + ' -out ' + args.output_path + ' -bs ' + str(args.batch_size)
-    if type == 'style':
+    if args.type == 'style':
         config_name = '--base configs/latent-diffusion/txt2img-1p4B-finetune_style_with_grad.yaml '
         training_config_name = '--base configs/latent-diffusion/Embedding_in_Framework/txt2img-1p4B-finetune_style.yaml '
     else:
@@ -244,7 +244,7 @@ if __name__ == '__main__':
         os.system(generating_command)
         print('Phase4 Generating Adv Embeddings')
         
-        if type == 'style':
+        if args.type == 'style':
             embedding_output_command = 'python scripts/txt2img.py  --ddim_eta 0.0 --n_samples 2 --n_iter 5 --scale 10.0 --ddim_steps 50  --embedding_path ' + log_target_class + '/checkpoints/embeddings_gs-4999.pt --ckpt_path models/ldm/text2img-large/model.ckpt --prompt "A photo in the style of *" --outdir '+output_class
         else:
             embedding_output_command = 'python scripts/txt2img.py  --ddim_eta 0.0 --n_samples 2 --n_iter 5 --scale 10.0 --ddim_steps 50  --embedding_path ' + log_target_class + '/checkpoints/embeddings_gs-4999.pt --ckpt_path models/ldm/text2img-large/model.ckpt --prompt "A photo of *" --outdir '+output_class            
@@ -263,7 +263,7 @@ if __name__ == '__main__':
         print(generating_cln_command)
         os.system(generating_cln_command)
         print('Phase7 Generating Clean Embeddings')
-        if type == 'style':
+        if args.type == 'style':
             embedding_output_command_cln = 'python scripts/txt2img.py --ddim_eta 0.0 --n_samples 2 --n_iter 5 --scale 10.0 --ddim_steps 50  --embedding_path ' + log_target_class_cln + '/checkpoints/embeddings_gs-4999.pt --ckpt_path models/ldm/text2img-large/model.ckpt --prompt "A photo in the style of *" --outdir '+output_class_cln
         else:
             embedding_output_command_cln = 'python scripts/txt2img.py --ddim_eta 0.0 --n_samples 2 --n_iter 5 --scale 10.0 --ddim_steps 50  --embedding_path ' + log_target_class_cln + '/checkpoints/embeddings_gs-4999.pt --ckpt_path models/ldm/text2img-large/model.ckpt --prompt "A photo of *" --outdir '+output_class_cln
